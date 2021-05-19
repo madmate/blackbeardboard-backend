@@ -3,7 +3,7 @@ plugins {
     id 'war'
 }
 
-group 'backend.black.beard.board'
+group 'backend.blackbeardboard'
 version '1.0-SNAPSHOT'
 
 repositories {
