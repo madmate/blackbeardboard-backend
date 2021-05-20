@@ -21,8 +21,8 @@ public class BoardResource {
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-    public String createBoard() {
-        return "This will create your board ... later";
+    public String createBoard(@QueryParam("name") String name, @QueryParam("deprecationTime") String deprecationTime) {
+        return "This will create your board ... later " + name + " " + deprecationTime;
     }
 
     @PUT
