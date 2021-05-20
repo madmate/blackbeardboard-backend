@@ -1,15 +1,19 @@
 package backend.blackbeardboard;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/board")
 public class BoardResource {
 
+    @Inject
+    BoardController boardController;
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getBoard() {
-        return "This will get your board ... later";
+    public String getBoard(@QueryParam("name") String name) {
+        return "This will get your board ... later" + boardController.count();
     }
 
     @GET
@@ -27,13 +31,13 @@ public class BoardResource {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateBoard() {
+    public String updateBoard(@QueryParam("name") String name, @QueryParam("message") String message) {
         return "This will update your board ... later";
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteBoard() {
+    public String deleteBoard(@QueryParam("name") String name) {
         return "This will delete your board ... later";
     }
 
