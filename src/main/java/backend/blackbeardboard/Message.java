@@ -1,5 +1,7 @@
 package backend.blackbeardboard;
 
+import org.json.JSONObject;
+
 import java.time.Instant;
 
 public class Message {
@@ -21,5 +23,12 @@ public class Message {
 
     public Instant getTimestamp() {
         return timestamp;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject object = new JSONObject();
+        object.put("content", getContext());
+        object.put("timestamp", getTimestamp().getEpochSecond());
+        return object;
     }
 }

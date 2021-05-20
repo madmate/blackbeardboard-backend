@@ -12,9 +12,15 @@ public class BoardResource {
     BoardController boardController;
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getBoard(@QueryParam("name") String name) {
-        return "This will get your board ... later";
+    public Response getBoard(@QueryParam("name") String name) {
+        if (name == null) {
+            return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("name is mandatory").build();
+        }
+        Board board = boardController.getBoard(name);
+        if (board == null) {
+            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity("board not found").build();
+        }
+        return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(board.toJSON().toString()).build();
     }
 
     @GET
