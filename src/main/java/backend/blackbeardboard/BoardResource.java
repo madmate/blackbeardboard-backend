@@ -23,13 +23,6 @@ public class BoardResource {
         return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(board.toJSON().toString()).build();
     }
 
-    @GET
-    @Path("/boards")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getBoards() {
-        return "This will get your boards as list ... later";
-    }
-
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createBoard(@QueryParam("name") String name, @DefaultValue("100") @QueryParam("deprecationTime") String deprecationTime) {
@@ -76,12 +69,4 @@ public class BoardResource {
             return Response.status(Response.Status.OK).entity("board deleted").build();
         }
     }
-
-    @DELETE
-    @Path("/boards")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String deleteBoards() {
-        return "This will delete your boards ... later";
-    }
-
 }
