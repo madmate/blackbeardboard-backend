@@ -33,11 +33,11 @@ public class BoardResource {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createBoard(@QueryParam("name") String name, @DefaultValue("100") @QueryParam("deprecationTime") String deprecationTime) {
-        if (boardController.containsBoard(name)) {
-            return Response.status(Response.Status.CONFLICT).entity("board \"" + name + "\" already exists").build();
-        }
         if (name == null || name.equals("")) {
             return Response.status(Response.Status.BAD_REQUEST).entity("specify name of board to create").build();
+        }
+        if (boardController.containsBoard(name)) {
+            return Response.status(Response.Status.CONFLICT).entity("board \"" + name + "\" already exists").build();
         }
         int deprecationTimeInt;
         try {
@@ -57,9 +57,17 @@ public class BoardResource {
     }
 
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    public String deleteBoard(@QueryParam("name") String name) {
-        return "This will delete your board ... later";
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteBoard(@QueryParam("name") String name) {
+        if (name == null || name.equals("")) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("specify name of board to create").build();
+        }
+        Board board = boardController.deleteBoard(name);
+        if (board == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("no board to delete").build();
+        } else {
+            return Response.status(Response.Status.OK).entity("board deleted").build();
+        }
     }
 
     @DELETE
