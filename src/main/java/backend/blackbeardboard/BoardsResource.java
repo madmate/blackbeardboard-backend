@@ -16,7 +16,7 @@ public class BoardsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getBoards() {
-        return "This will get your boards as list ... later";
+      return "This will get your boards as list ... later";
     }
 
     @DELETE

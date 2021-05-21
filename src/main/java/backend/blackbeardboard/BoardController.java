@@ -1,7 +1,6 @@
 package backend.blackbeardboard;
 
 import jakarta.inject.Singleton;
-
 import java.util.HashMap;
 import java.util.Map;
 
