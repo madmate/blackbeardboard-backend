@@ -15,6 +15,9 @@ public class BoardsResource {
     @Inject
     BoardController boardController;
 
+    @Inject
+    SseHandler sseHandler;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBoards() {
@@ -31,6 +34,7 @@ public class BoardsResource {
         if (boardController.noBoards()) {
             return Response.status(Response.Status.NOT_FOUND).entity("no boards available").build();
         }
+        sseHandler.sendAllBoardsDeleted();
         boardController.deleteBoards();
         return Response.status(Response.Status.OK).entity("all boards deleted").build();
     }

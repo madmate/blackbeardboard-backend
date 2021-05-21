@@ -53,6 +53,16 @@ public class SseHandler {
         this.broadcaster.broadcast(event);
         lastEventId++;
     }
+    public void sendAllBoardsDeleted() {
+        final OutboundSseEvent event = sse.newEventBuilder()
+                .name("all_boards_deleted")
+                .id(Integer.toString(lastEventId))
+                .mediaType(MediaType.TEXT_PLAIN_TYPE)
+                .data("Deleted")
+                .build();
+        this.broadcaster.broadcast(event);
+        lastEventId++;
+    }
 
     @GET
     @Path("listen")
