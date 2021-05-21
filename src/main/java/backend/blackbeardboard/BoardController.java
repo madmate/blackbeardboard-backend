@@ -1,6 +1,9 @@
 package backend.blackbeardboard;
 
 import jakarta.inject.Singleton;
+
+import org.json.JSONArray;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +20,12 @@ public class BoardController {
         return boards.get(name);
     }
 
+    public JSONArray getBoards() {
+        JSONArray jsonArray = new JSONArray();
+        boards.forEach((k, v) -> jsonArray.put(v.toJSON()));
+        return jsonArray;
+    }
+
     public Board deleteBoard(String name) {
         return boards.remove(name);
     }
@@ -31,5 +40,9 @@ public class BoardController {
 
     public boolean containsBoard(String name) {
         return boards.containsKey(name);
+    }
+
+    public void deleteBoards() {
+        boards.clear();
     }
 }
