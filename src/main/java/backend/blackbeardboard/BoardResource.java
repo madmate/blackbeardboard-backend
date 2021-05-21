@@ -51,9 +51,16 @@ public class BoardResource {
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public String updateBoard(@QueryParam("name") String name, @QueryParam("message") String message) {
-        return "This will update your board ... later";
+    public Response updateBoard(@QueryParam("name") String name, @QueryParam("message") String message) {
+        if (name == null || name.equals("")) {
+            return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("specify name of board to create").build();
+        }
+        if (message == null) {
+            boardController.getBoard(name).setMessage(null);
+        } else {
+            boardController.getBoard(name).setMessage(new Message(message));
+        }
+        return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(boardController.getBoard(name).toJSON().toString()).build();
     }
 
     @DELETE
