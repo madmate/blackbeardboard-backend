@@ -10,6 +10,8 @@ import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseBroadcaster;
 import jakarta.ws.rs.sse.SseEventSink;
 
+import java.util.List;
+
 @Path("/board")
 public class BoardResource {
     @Inject
@@ -46,7 +48,7 @@ public class BoardResource {
         }
         Board board = new Board(name, deprecationTimeInt);
         boardController.addBoard(board);
-        sseHandler.sendBoardAdded(board);
+        sseHandler.sendBoardsAdded(new Board[]{board});
         return Response.status(Response.Status.CREATED).entity("successfully created board \"" + name + "\"").build();
     }
 
@@ -63,7 +65,7 @@ public class BoardResource {
         } else {
             boardController.getBoard(name).setMessage(new Message(message));
         }
-        sseHandler.sendBoardChanged(boardController.getBoard(name));
+        sseHandler.sendBoardsChanged(new Board[]{boardController.getBoard(name)});
         return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(boardController.getBoard(name).toJSON().toString()).build();
     }
 
@@ -77,7 +79,7 @@ public class BoardResource {
         if (board == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("no board to delete").build();
         } else {
-            sseHandler.sendBoardDeleted(board);
+            sseHandler.sendBoardsDeleted(new Board[]{board});
             return Response.status(Response.Status.OK).entity("board deleted").build();
         }
     }

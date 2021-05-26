@@ -9,6 +9,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.json.JSONArray;
 
+import java.util.List;
+
 @Path("/boards")
 public class BoardsResource {
 
@@ -21,7 +23,7 @@ public class BoardsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBoards() {
-        JSONArray boards = boardController.getBoards();
+        JSONArray boards = boardController.getBoardsJSON();
         return Response.status(Response.Status.OK).entity(boards.toString()).build();
     }
 
@@ -31,7 +33,11 @@ public class BoardsResource {
         if (boardController.noBoards()) {
             return Response.status(Response.Status.NOT_FOUND).entity("no boards available").build();
         }
-        sseHandler.sendAllBoardsDeleted();
+
+        List<Board> boards = boardController.getBoards();
+        Board[] board_array = new Board[boards.size()];
+        board_array = boards.toArray(board_array);
+        sseHandler.sendBoardsDeleted(board_array);
         boardController.deleteBoards();
         return Response.status(Response.Status.OK).entity("all boards deleted").build();
     }

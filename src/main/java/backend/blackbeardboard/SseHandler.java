@@ -1,5 +1,6 @@
 package backend.blackbeardboard;
 
+import com.google.gson.Gson;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.*;
@@ -10,7 +11,11 @@ import jakarta.ws.rs.sse.OutboundSseEvent;
 import jakarta.ws.rs.sse.Sse;
 import jakarta.ws.rs.sse.SseEventSink;
 import jakarta.ws.rs.sse.SseBroadcaster;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 @Path("/")
@@ -23,42 +28,47 @@ public class SseHandler {
         this.sse = sse;
         this.broadcaster = sse.newBroadcaster();
     }
-    public void sendBoardAdded(Board board) {
+    public void sendBoardsAdded(Board[] boards) {
+        String jsonString = "[";
+        for (Board board : boards){
+            jsonString = jsonString + board.toJSON().toString() + ",";
+        }
+        jsonString = jsonString.substring(0,jsonString.length()-1) + "]";
         final OutboundSseEvent event = sse.newEventBuilder()
-                .name("board_added")
+                .name("boards_added")
                 .id(Integer.toString(lastEventId))
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                .data(board.toJSON().toString())
+                .data(jsonString)
                 .build();
         this.broadcaster.broadcast(event);
         lastEventId++;
     }
-    public void sendBoardChanged(Board board) {
+    public void sendBoardsChanged(Board[] boards) {
+        String jsonString = "[";
+        for (Board board : boards){
+            jsonString = jsonString + board.toJSON().toString() + ",";
+        }
+        jsonString = jsonString.substring(0,jsonString.length()-1) + "]";
         final OutboundSseEvent event = sse.newEventBuilder()
-                .name("board_changed")
+                .name("boards_changed")
                 .id(Integer.toString(lastEventId))
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                .data(board.toJSON().toString())
+                .data(jsonString)
                 .build();
         this.broadcaster.broadcast(event);
         lastEventId++;
     }
-    public void sendBoardDeleted(Board board) {
+    public void sendBoardsDeleted(Board[] boards) {
+        String jsonString = "[";
+        for (Board board : boards){
+            jsonString = jsonString + board.toJSON().toString() + ",";
+        }
+        jsonString = jsonString.substring(0,jsonString.length()-1) + "]";
         final OutboundSseEvent event = sse.newEventBuilder()
-                .name("board_deleted")
+                .name("boards_deleted")
                 .id(Integer.toString(lastEventId))
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                .data(board.toJSON().toString())
-                .build();
-        this.broadcaster.broadcast(event);
-        lastEventId++;
-    }
-    public void sendAllBoardsDeleted() {
-        final OutboundSseEvent event = sse.newEventBuilder()
-                .name("all_boards_deleted")
-                .id(Integer.toString(lastEventId))
-                .mediaType(MediaType.TEXT_PLAIN_TYPE)
-                .data("Deleted")
+                .data(jsonString)
                 .build();
         this.broadcaster.broadcast(event);
         lastEventId++;

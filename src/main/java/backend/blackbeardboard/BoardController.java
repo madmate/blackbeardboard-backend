@@ -4,7 +4,9 @@ import jakarta.inject.Singleton;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Singleton
@@ -20,10 +22,17 @@ public class BoardController {
         return boards.get(name);
     }
 
-    public JSONArray getBoards() {
+    public JSONArray getBoardsJSON() {
         JSONArray jsonArray = new JSONArray();
         boards.forEach((k, v) -> jsonArray.put(v.toJSON()));
         return jsonArray;
+    }
+    public List<Board> getBoards() {
+        List<Board> board_list = new ArrayList<Board>();
+        for (String key : boards.keySet()){
+            board_list.add(boards.get(key));
+        }
+        return board_list;
     }
 
     public Board deleteBoard(String name) {
