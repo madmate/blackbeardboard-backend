@@ -1,0 +1,9 @@
+package backend.blackbeardboard;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+@ApplicationPath("/")
+public class BoardApplication extends Application {
+
+}
