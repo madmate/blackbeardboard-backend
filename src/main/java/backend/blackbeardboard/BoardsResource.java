@@ -22,10 +22,7 @@ public class BoardsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBoards() {
         JSONArray boards = boardController.getBoards();
-        if (boards.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity("no boards available").build();
-        }
-        return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(boards.toString()).build();
+        return Response.status(Response.Status.OK).entity(boards.toString()).build();
     }
 
     @DELETE
