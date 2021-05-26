@@ -55,6 +55,9 @@ public class BoardResource {
         if (name == null || name.equals("")) {
             return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("specify name of board to create").build();
         }
+        if(boardController.getBoard(name) == null){
+            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity("board not found").build();
+        }
         if (message == null) {
             boardController.getBoard(name).setMessage(null);
         } else {
