@@ -6,6 +6,7 @@ public class Board {
     private final String name;
     private Message message;
     private int deprecationTime;
+    private boolean locked;
 
     public Board(String name, int deprecationTime) {
         this.name = name;
@@ -30,6 +31,14 @@ public class Board {
         } else {
             return getMessage().toJSON();
         }
+    }
+
+    public boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     public int getDeprecationTime() {
