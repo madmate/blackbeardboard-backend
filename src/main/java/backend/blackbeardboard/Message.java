@@ -5,8 +5,8 @@ import org.json.JSONObject;
 import java.time.Instant;
 
 public class Message {
-    private String context;
-    private Instant timestamp;
+    private final String context;
+    private final Instant timestamp;
 
     public Message(String context, Instant timestamp) {
         this.context = context;

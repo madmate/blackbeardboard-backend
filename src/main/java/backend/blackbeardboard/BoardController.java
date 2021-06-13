@@ -1,7 +1,6 @@
 package backend.blackbeardboard;
 
 import jakarta.inject.Singleton;
-
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.Map;
 @Singleton
 public class BoardController {
 
-    private Map<String, Board> boards;
+    private final Map<String, Board> boards;
 
     public BoardController() {
         boards = new HashMap<>();
@@ -27,12 +26,18 @@ public class BoardController {
         boards.forEach((k, v) -> jsonArray.put(v.toJSON()));
         return jsonArray;
     }
+
     public List<Board> getBoards() {
-        List<Board> board_list = new ArrayList<Board>();
-        for (String key : boards.keySet()){
+        List<Board> board_list = new ArrayList<>();
+        for (String key : boards.keySet()) {
             board_list.add(boards.get(key));
         }
         return board_list;
+    }
+
+    public JSONArray getBoardsNamesJSON() {
+        String[] names = boards.keySet().toArray(new String[0]);
+        return new JSONArray(names);
     }
 
     public Board deleteBoard(String name) {
