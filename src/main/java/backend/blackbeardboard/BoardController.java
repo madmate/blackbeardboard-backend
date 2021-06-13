@@ -11,7 +11,7 @@ import java.util.Map;
 @Singleton
 public class BoardController {
 
-    private Map<String, Board> boards;
+    private final Map<String, Board> boards;
 
     public BoardController() {
         boards = new HashMap<>();
@@ -26,9 +26,10 @@ public class BoardController {
         boards.forEach((k, v) -> jsonArray.put(v.toJSON()));
         return jsonArray;
     }
+
     public List<Board> getBoards() {
         List<Board> board_list = new ArrayList<Board>();
-        for (String key : boards.keySet()){
+        for (String key : boards.keySet()) {
             board_list.add(boards.get(key));
         }
         return board_list;

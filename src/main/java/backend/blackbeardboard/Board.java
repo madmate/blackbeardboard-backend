@@ -3,7 +3,7 @@ package backend.blackbeardboard;
 import org.json.JSONObject;
 
 public class Board {
-    private String name;
+    private final String name;
     private Message message;
     private int deprecationTime;
 
@@ -20,6 +20,10 @@ public class Board {
         return message;
     }
 
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
     public JSONObject getMessageJSON() {
         if (getMessage() == null) {
             return null;
@@ -30,10 +34,6 @@ public class Board {
 
     public int getDeprecationTime() {
         return deprecationTime;
-    }
-
-    public void setMessage(Message message) {
-        this.message = message;
     }
 
     public void setDeprecationTime(int deprecationTime) {
