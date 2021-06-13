@@ -20,7 +20,7 @@ public class BoardController {
     public Board getBoard(String name) {
         return boards.get(name);
     }
-
+    private final String TAG = getClass().getName();
     public JSONArray getBoardsJSON() {
         JSONArray jsonArray = new JSONArray();
         boards.forEach((k, v) -> jsonArray.put(v.toJSON()));
@@ -41,10 +41,12 @@ public class BoardController {
     }
 
     public Board deleteBoard(String name) {
+        Logger.log(TAG,"Deleting board name=\""+name+"\"");
         return boards.remove(name);
     }
 
     public void addBoard(Board board) {
+        Logger.log(TAG,"Adding board name=\""+board.getName()+"\"");
         boards.put(board.getName(), board);
     }
 
@@ -57,6 +59,7 @@ public class BoardController {
     }
 
     public void deleteBoards() {
+        Logger.log(TAG,"Clearing all boards");
         boards.clear();
     }
 }
