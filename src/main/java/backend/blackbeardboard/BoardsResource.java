@@ -23,8 +23,12 @@ public class BoardsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBoards() {
-        JSONArray boards = boardController.getBoardsJSON();
-        return Response.status(Response.Status.OK).entity(boards.toString()).build();
+        String names_list = "[";
+        for (Board board : boardController.getBoards()) {
+           names_list = names_list + board.getName()+",";
+        }
+        names_list = names_list.substring(0,names_list.length()-1)+"]";
+        return Response.status(Response.Status.OK).entity(names_list).build();
     }
 
     @DELETE

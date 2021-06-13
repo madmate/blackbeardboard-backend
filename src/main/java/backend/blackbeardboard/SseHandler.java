@@ -31,7 +31,7 @@ public class SseHandler {
     public void sendBoardsAdded(Board[] boards) {
         String jsonString = "[";
         for (Board board : boards){
-            jsonString = jsonString + board.toJSON().toString() + ",";
+            jsonString = jsonString + board.getName() + ",";
         }
         jsonString = jsonString.substring(0,jsonString.length()-1) + "]";
         final OutboundSseEvent event = sse.newEventBuilder()
@@ -61,7 +61,7 @@ public class SseHandler {
     public void sendBoardsDeleted(Board[] boards) {
         String jsonString = "[";
         for (Board board : boards){
-            jsonString = jsonString + board.toJSON().toString() + ",";
+            jsonString = jsonString + board.getName() + ",";
         }
         jsonString = jsonString.substring(0,jsonString.length()-1) + "]";
         final OutboundSseEvent event = sse.newEventBuilder()
