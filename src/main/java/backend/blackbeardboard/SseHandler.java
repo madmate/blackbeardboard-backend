@@ -23,13 +23,14 @@ public class SseHandler {
         this.sse = sse;
         this.broadcaster = sse.newBroadcaster();
     }
-
+    private final String TAG = getClass().getName();
     public void sendBoardsAdded(Board[] boards) {
         String jsonString = "[";
         for (Board board : boards){
             jsonString = jsonString + board.getName() + ",";
         }
         jsonString = jsonString.substring(0, jsonString.length() - 1) + "]";
+        Logger.log(TAG,"Sending added boards: "+jsonString);
         final OutboundSseEvent event = sse.newEventBuilder()
                 .name("boards_added")
                 .id(Integer.toString(lastEventId))
@@ -38,6 +39,7 @@ public class SseHandler {
                 .build();
         this.broadcaster.broadcast(event);
         lastEventId++;
+        Logger.log(TAG,"Sending added boards successful");
     }
 
     public void sendBoardsChanged(Board[] boards) {
@@ -46,6 +48,7 @@ public class SseHandler {
             jsonString = jsonString + board.toJSON().toString() + ",";
         }
         jsonString = jsonString.substring(0, jsonString.length() - 1) + "]";
+        Logger.log(TAG,"Sending changed boards: "+jsonString);
         final OutboundSseEvent event = sse.newEventBuilder()
                 .name("boards_changed")
                 .id(Integer.toString(lastEventId))
@@ -54,6 +57,7 @@ public class SseHandler {
                 .build();
         this.broadcaster.broadcast(event);
         lastEventId++;
+        Logger.log(TAG,"Sending changed boards successful");
     }
 
     public void sendBoardsDeleted(Board[] boards) {
@@ -62,6 +66,7 @@ public class SseHandler {
             jsonString = jsonString + board.getName() + ",";
         }
         jsonString = jsonString.substring(0, jsonString.length() - 1) + "]";
+        Logger.log(TAG,"Sending deleted boards: "+jsonString);
         final OutboundSseEvent event = sse.newEventBuilder()
                 .name("boards_deleted")
                 .id(Integer.toString(lastEventId))
@@ -70,6 +75,7 @@ public class SseHandler {
                 .build();
         this.broadcaster.broadcast(event);
         lastEventId++;
+        Logger.log(TAG,"Sending deleted boards successful");
     }
 
     @GET
@@ -77,5 +83,6 @@ public class SseHandler {
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public void listenToBroadcast(@Context SseEventSink eventSink) {
         this.broadcaster.register(eventSink);
+        Logger.log(TAG,"Registered new listener");
     }
 }
