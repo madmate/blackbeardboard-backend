@@ -1,7 +1,6 @@
 package backend.blackbeardboard;
 
 import jakarta.inject.Singleton;
-
 import org.json.JSONArray;
 
 import java.util.ArrayList;

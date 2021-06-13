@@ -2,15 +2,8 @@ package backend.blackbeardboard;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.sse.OutboundSseEvent;
-import jakarta.ws.rs.sse.Sse;
-import jakarta.ws.rs.sse.SseBroadcaster;
-import jakarta.ws.rs.sse.SseEventSink;
-
-import java.util.List;
 
 @Path("/board")
 public class BoardResource {
