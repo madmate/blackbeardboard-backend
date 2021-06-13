@@ -23,7 +23,7 @@ public class BoardsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBoards() {
-        JSONArray boards = boardController.getBoardsJSON();
+        JSONArray boards = boardController.getBoardsNamesJSON();
         return Response.status(Response.Status.OK).entity(boards.toString()).build();
     }
 

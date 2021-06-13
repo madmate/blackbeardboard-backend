@@ -28,11 +28,16 @@ public class BoardController {
     }
 
     public List<Board> getBoards() {
-        List<Board> board_list = new ArrayList<Board>();
+        List<Board> board_list = new ArrayList<>();
         for (String key : boards.keySet()) {
             board_list.add(boards.get(key));
         }
         return board_list;
+    }
+
+    public JSONArray getBoardsNamesJSON() {
+        String[] names = boards.keySet().toArray(new String[0]);
+        return new JSONArray(names);
     }
 
     public Board deleteBoard(String name) {
