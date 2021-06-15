@@ -1,6 +1,8 @@
 package backend.blackbeardboard;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -19,7 +21,8 @@ import jakarta.ws.rs.sse.SseEventSink;
 public class SseHandler {
     private Sse sse;
     private SseBroadcaster broadcaster;
-
+    @Inject
+    private HttpServletRequest request;
     //Keep track of events send, so clients can keep up, which events he has received already
     private int lastEventId = 1;
 
@@ -100,6 +103,6 @@ public class SseHandler {
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public void listenToBroadcast(@Context SseEventSink eventSink) {
         this.broadcaster.register(eventSink);
-        Logger.log(TAG,"Registered new listener");
+        Logger.log(TAG,"Registered new listener: " +request.getRemoteAddr());
     }
 }

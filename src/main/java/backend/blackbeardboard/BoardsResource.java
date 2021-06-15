@@ -1,6 +1,7 @@
 package backend.blackbeardboard;
 
 import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -19,6 +20,10 @@ public class BoardsResource {
     @Inject
     BoardController boardController;
 
+    //Used to get informationen about the request
+    //E.g. Ip Adress for log with getRemoteAddr()
+    @Inject
+    private HttpServletRequest request;
     //Connect to Server sent events handler
     @Inject
     SseHandler sseHandler;
@@ -29,9 +34,9 @@ public class BoardsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBoards() {
-        Logger.log(TAG,"GET");
+        Logger.log(TAG,"GET(getBoards) from: "+request.getRemoteAddr());
         JSONArray boards = boardController.getBoardsNamesJSON();
-        Logger.log(TAG,"GET successful");
+        Logger.log(TAG,"GET(getBoards) from: "+request.getRemoteAddr()+" successful");
         return Response.status(Response.Status.OK).entity(boards.toString()).build();
     }
 
@@ -39,9 +44,9 @@ public class BoardsResource {
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteBoards() {
-        Logger.log(TAG,"DELETE");
+        Logger.log(TAG,"DELETE(deleteBoards) from: "+request.getRemoteAddr());
         if (boardController.noBoards()) {
-            Logger.log(TAG,"No boards to delete");
+            Logger.log(TAG,"DELETE(deleteBoards) from: "+request.getRemoteAddr()+" No boards to delete");
             return Response.status(Response.Status.NOT_FOUND).entity("no boards available").build();
         }
 
@@ -53,7 +58,7 @@ public class BoardsResource {
         sseHandler.sendBoardsDeleted(board_array);
 
         boardController.deleteBoards();
-        Logger.log(TAG,"DELETE: successful");
+        Logger.log(TAG,"DELETE(deleteBoards) from: "+request.getRemoteAddr()+" successful");
         return Response.status(Response.Status.OK).entity("all boards deleted").build();
     }
 
