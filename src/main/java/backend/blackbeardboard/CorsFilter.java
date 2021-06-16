@@ -7,6 +7,9 @@ import jakarta.ws.rs.ext.Provider;
 
 import java.io.IOException;
 
+/**
+ * Header wird automatisch in jede Antwort eingefügt
+ */
 @Provider
 public class CorsFilter implements ContainerResponseFilter {
 
